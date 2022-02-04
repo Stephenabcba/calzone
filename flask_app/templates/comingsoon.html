@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzone</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 flex justify-between my-5 mx-3 md:mx-8 items-center">
+            <h1 class="text-5xl"><a href="/" class="mr-3">CalZone</a></h1>
+            {% if 'uuid' in session %}
+            <div>
+                <p class="text-lg">Hello, {{session['name']}}</p>
+                <a href="/logout" class="text-blue-500">Log Out</a>
+            </div>
+            {% else %}
+                <a href="/signup" class="bg-blue-500 text-white rounded px-5 py-3 hidden md:inline-block">Sign Up</a>
+                <a href="/signup" class="w-10 md:hidden">
+                    <img src="{{ url_for('static', filename='img/menu_icon.png') }}" alt="menu icon">
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-span-10 col-start-2">
+            <div class="grid md:grid-cols-2">
+                <h2 class="text-5xl text-center">COMING SOON</h2>
+                <h3 class="text-3xl text-center">You have Reached a page under construction! One day it might be built.</h3>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

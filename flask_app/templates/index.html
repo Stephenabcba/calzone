@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzone</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 flex justify-between my-5 mx-3 md:mx-8 items-center">
+            <h1 class="text-5xl"><a href="/" class="mr-3">CalZone</a></h1>
+            {% if 'uuid' in session %}
+            <div>
+                <p class="text-lg">Hello, {{session['name']}}</p>
+                <a href="/user/favorites" class="text-blue-500">Favorites</a>
+                <a href="/logout" class="text-blue-500">Log Out</a>
+            </div>
+            {% else %}
+                <a href="/signup" class="bg-blue-500 text-white rounded px-5 py-3 hidden md:inline-block">Sign Up</a>
+                <a href="/signup" class="w-10 md:hidden">
+                    <img src="{{ url_for('static', filename='img/menu_icon.png') }}" alt="menu icon">
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-span-10 col-start-2">
+            <div class="grid md:grid-cols-2">
+                <div class="px-3">
+                    <!-- <form action="/searching" method="post" id="searchForm"> -->
+                    <div id="form_error"></div>
+                    <form id="searchForm">
+                        <div class="flex">
+                            <input type="text" name="zip_code" id="zip_search_input" placeholder="Enter your address or zip" class="border rounded p-3 w-full mb-3" >
+                        </div>
+                        <div class="flex mb-3 justify-center">
+                            <!-- <img src="{{ url_for('static', filename='img/map_placeholder.png') }}" alt="map" class="w-2/3 md:w-full"> -->
+                            <!-- <embed src="{{ url_for('static', filename='maps.html') }}" type="text/html" class="w-full h-80"> -->
+                            <iframe
+                                class="w-full"
+                                height="500"
+                                frameborder="0" style="border:0"
+                                id="zipMap"
+                                src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBrlaKmNtNUyggA1GleE_o8eC8BbGym-e8&q=zipcode+92802" allowfullscreen>
+                            </iframe>
+                        </div>
+                        <div class="flex mb-3 items-center">
+                            <div class="flex mr-3">
+                                <label for="calories_check" class="flex cursor-pointer">
+                                    <div class="relative">
+                                        <input type="checkbox" name="calories_check" id="calories_check" role="switch" class="sr-only">
+                                        <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
+                                        <!-- dot -->
+                                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                                    </div>
+                                    <!-- <div class="ml-3 text-gray-700 font-medium">
+                                        Calories Checkbox
+                                    </div> -->
+                                </label>
+                            </div>
+                            <label for="calories" class="mr-2">Calories Limit</label>
+                            <input type="number" name="calories" id="calories" class="border rounded p-3 w-0 grow">
+                        </div>
+
+                        <div class="flex mb-3 items-center">
+                            <div class="flex mr-3">
+                                <label for="distance_check" class="flex cursor-pointer">
+                                    <div class="relative">
+                                        <input type="checkbox" name="distance_check" id="distance_check" role="switch" class="sr-only">
+                                        <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
+                                        <!-- dot -->
+                                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                                    </div>
+                                    <!-- <div class="ml-3 text-gray-700 font-medium">
+                                        Calories Checkbox
+                                    </div> -->
+                                </label>
+                            </div>
+                            <label for="distance" class="mr-2">Customize Distance (Miles) </label>
+                            <input type="number" name="distance" id="distance" class="border rounded p-3 w-0 grow">
+                        </div>
+
+                        <div class="flex mb-3 items-center">
+                            <div class="flex mr-3">
+                                <label for="vegetarian_check" class="flex cursor-pointer">
+                                    <div class="relative mr-3">
+                                        <input type="checkbox" name="vegetarian_check" id="vegetarian_check" role="switch" class="sr-only">
+                                        <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
+                                        <!-- dot -->
+                                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                                    </div>
+                                    <!-- <div class="ml-3 text-gray-700 font-medium">
+                                        Calories Checkbox
+                                    </div> -->
+                                    <p>Vegetarian</p>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="flex mb-3 justify-between items-center">
+                            <div class="flex mr-3">
+                                <label for="gluten_free_check" class="flex cursor-pointer">
+                                    <div class="relative mr-3">
+                                        <input type="checkbox" name="gluten_free_check" id="gluten_free_check" role="switch" class="sr-only">
+                                        <div class="block bg-gray-600 w-10 h-6 rounded-full"></div>
+                                        <!-- dot -->
+                                        <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition"></div>
+                                    </div>
+                                    <!-- <div class="ml-3 text-gray-700 font-medium">
+                                        Calories Checkbox
+                                    </div> -->
+                                    <p>Gluten-Free</p>
+                                </label>
+                            </div>
+                            <button class="bg-blue-500 px-5 py-3 rounded-lg text-white">Build a Meal!</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="pl-8">
+                    <h2 class="text-2xl">Results:</h2>
+                    <div id="dishes">
+                    </div>
+                    <!-- <div class="">
+                        <h2>This is placeholder</h2>
+                        <div class="border border-solid border-gray-200 rounded p-8 mb-4">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p class="text-lg"><a href="/show" class="text-blue-500">Option 1</a> Restaurant 1</p>
+                                    <ul>
+                                        <li>Caesar Salad</li>
+                                        <li>Smoothie</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="mb-3">Calories: 400</p>
+                                    <button class="px-5 py-3 bg-blue-500 text-white rounded">Order!</button>
+                                </div>
+                            </div>
+                    
+                        </div>
+                        <div class="border border-solid border-gray-200 rounded p-8">
+                            <div class="flex justify-between">
+                                <div>
+                                    <p class="text-lg"><a href="/show" class="text-blue-500">Option 2</a> Restaurant 2</p>
+                                    <ul>
+                                        <li>Tofu Pot</li>
+                                        <li>Rice</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="mb-3">Calories: 650</p>
+                                    <button class="px-5 py-3 bg-blue-500 text-white rounded">Order!</button>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="/map">Go to Map</a>
+    <!-- <a href="/nutrixDemo">Go to nutrix demo</a> -->
+    <style>
+        /* Toggle B */
+        input:checked ~ .dot {
+            transform: translateX(100%);
+            background-color: #48bb78;
+        }
+    </style>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

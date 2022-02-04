@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzone</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 flex justify-between my-5 mx-3 md:mx-8 items-center">
+            <h1 class="text-5xl"><a href="/" class="mr-3">CalZone</a></h1>
+            {% if 'uuid' in session %}
+            <div>
+                <p class="text-lg">Hello, {{session['name']}}</p>
+                <a href="/logout" class="text-blue-500">Log Out</a>
+            </div>
+            {% else %}
+                <a href="/signup" class="bg-blue-500 text-white rounded px-5 py-3 hidden md:inline-block">Sign Up</a>
+                <a href="/signup" class="w-10 md:hidden">
+                    <img src="{{ url_for('static', filename='img/menu_icon.png') }}" alt="menu icon">
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-span-10 col-start-2">
+            <div id="dishes">
+                <div class="border border-solid border-gray-200 rounded p-8 mb-4">
+                    <p class="text-3xl">Favorites</p>
+                    <ul>
+                        {% for dish in dish_list %}
+                        <li class="mb-3 border border-solid border-gray-200 rounded p-8" id="{{dish['dish_id']}}">
+                            <div class="flex justify-between">
+                                <div class="flex-1">
+                                    <p>{{dish['dish_name']}}</p>
+                                    <img src="{{dish['img_url']}}" alt="{{dish['dish_name']}} Picture" class="w-1/4 border rounded">
+                                </div>
+                                <div class="flex-1 text-right">
+                                    <p class="mb-5">Calories: {{dish['calories']}}</p>
+                                    <button class="remove_favorite bg-red-500 px-3 py-2 rounded" onclick="remove_favorite(self,'{{dish['dish_id']}}')">Remove from Favorites</button>
+                                </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/favorites.js') }}"></script>
+</body>
+
+</html>

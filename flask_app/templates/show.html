@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calzone</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div class="grid grid-cols-12">
+        <div class="col-span-12 flex justify-between my-5 mx-3 md:mx-8 items-center">
+            <h1 class="text-5xl"><a href="/" class="mr-3">CalZone</a></h1>
+            {% if 'uuid' in session %}
+            <div>
+                <p class="text-lg">Hello, {{session['name']}}</p>
+                <a href="/user/favorites" class="text-blue-500">Favorites</a>
+                <a href="/logout" class="text-blue-500">Log Out</a>
+            </div>
+            {% else %}
+                <a href="/signup" class="bg-blue-500 text-white rounded px-5 py-3 hidden md:inline-block">Sign Up</a>
+                <a href="/signup" class="w-10 md:hidden">
+                    <img src="{{ url_for('static', filename='img/menu_icon.png') }}" alt="menu icon">
+                </a>
+            {% endif %}
+        </div>
+        <div class="col-span-10 col-start-2">
+            <div id="dishes">
+                <div class="border border-solid border-gray-200 rounded p-8 mb-4">
+                    <p class="text-3xl">{% if choices %}
+                        {{choices[0]['restaurant_name']}}
+                    {% else %}
+                        Restaurant Not Found
+                    {% endif %}</p>
+                    <ul>
+                        {% for choice in choices %}
+                        <li class="mb-3">
+                            <div class="flex justify-between">
+                                <div class="flex-1">
+                                    <p class="text-xl mb-3">{{choice['dish_name']}}</p>
+                                    <img src="{{choice['img_url']}}" alt="{{choice['dish_name']}} Picture" class="w-1/2 border rounded">
+                                </div>
+                                <div class="flex-1 text-right">
+                                    <p>Calories: {{choice['calories']}}</p>
+                                </div>
+                            </div>
+
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="flex justify-between">
+                        <div>
+                            {% if 'uuid' in session %}
+                            <form id="favorite" method="post">
+                                <button class="px-5 py-3 bg-blue-500 text-white rounded">Add to Favorite</button>
+                            </form>
+                            {% endif %}
+                        </div>
+                        <a href="/comingsoon" class="px-5 py-3 bg-blue-500 text-white rounded">Order!</a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/show.js') }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="css/gmaps_style.css" />
+    <script src="js/googlemaps.js"></script>
+</head>
+<body>
+    <input
+      id="pac-input"
+      class="controls"
+      type="text"
+      placeholder="Search Box"
+    />
+    <div id="map"></div>
+
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATuCbN2d54D-ii2VAdN_CSvJayu6AKPhU&callback=initAutocomplete&libraries=places&v=weekly"
+      async
+    ></script>
+  </body>
+</html>
