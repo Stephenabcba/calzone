@@ -4,7 +4,7 @@ favorite.onsubmit = async function(e) {
     dish_id = window.location.pathname.split('/')[2]
     // console.log(dish_id);
     let form = new FormData(favorite)
-    let response = await fetch(`http://localhost:5000/favorite/${dish_id}`,{method:'POST',body:form})
+    let response = await fetch(`/favorite/${dish_id}`,{method:'POST',body:form})
     if (response) {
         favorite.remove()
     } else {

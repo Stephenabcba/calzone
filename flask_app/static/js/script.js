@@ -93,7 +93,7 @@ searchForm.onsubmit = async function(e) {
 }
 
 async function getLatLng(form) {
-    let zipResponse = await fetch('http://localhost:5000/searchZip',{method:'POST',body:form})
+    let zipResponse = await fetch('/searchZip',{method:'POST',body:form})
     let data = await zipResponse.json()
     // console.log(data);
     let errorBox = document.getElementById('form_error')
@@ -115,7 +115,7 @@ async function getLatLng(form) {
 async function getRestaurants(form, center) {
     form.append('lat',center.lat)
     form.append('lng',center.lng)
-    let response = await fetch('http://localhost:5000/searchRestaurant',{method:'POST',body:form})
+    let response = await fetch('/searchRestaurant',{method:'POST',body:form})
     let data = await response.json()
     let errorBox = document.getElementById('form_error')
     if (data.error) {
@@ -136,7 +136,7 @@ async function getMenu(restaurantData) {
         let form = new FormData()
         form.append("name",restaurant.name)
         form.append("brand_id",restaurant.brand_id)
-        let response = await fetch('http://localhost:5000/searchMenu',{method:'POST',body:form})
+        let response = await fetch('/searchMenu',{method:'POST',body:form})
         let data = await response.json()
         // console.log(data.branded);
         for (let menu_item of data.branded) {
