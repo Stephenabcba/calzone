@@ -1,7 +1,4 @@
 
-// let key = 'AIzaSyBrlaKmNtNUyggA1GleE_o8eC8BbGym-e8'
-let xapp = '86b63d84'
-let xid = '869750a3fb85d9b755712baf44ffcdf2'
 
 // async function getZipCenter(link) {
 //     let result = await fetch(link)
